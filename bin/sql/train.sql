@@ -1,18 +1,21 @@
+DROP TABLE profiles;
 CREATE TABLE profiles(
   id serial,
-  name character varying(50),
-  permission character varying(50)
+  name text,
+  permission text
 );
 
+DROP TABLE light;
 CREATE TABLE light(
   id serial,
-  level character varying(50),
+  level text,
   amount int
 );
 
+DROP TABLE voltage;
 CREATE TABLE voltage(
   id serial,
-  level character varying(50),
+  level text,
   amount int
 );
 
