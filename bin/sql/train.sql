@@ -2,7 +2,7 @@ DROP TABLE profiles;
 CREATE TABLE profiles(
   id serial,
   name text,
-  permission text
+  environment text
 );
 
 DROP TABLE light;
@@ -19,11 +19,12 @@ CREATE TABLE voltage(
   amount int
 );
 
-INSERT INTO profiles(name, permission)
+
+INSERT INTO profiles(name, environment)
 VALUES
-('Deek', 'Full'),
-('Dave', 'Partial'),
-('Nathan', 'Full');
+('Deek','Home'),
+('Dave','Public'),
+('Nathan','Ofiice');
 
 INSERT INTO light(level, amount)
 VALUES
