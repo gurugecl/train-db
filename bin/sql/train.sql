@@ -24,7 +24,7 @@ INSERT INTO profiles(name, environment)
 VALUES
 ('Deek','Home'),
 ('Dave','Public'),
-('Nathan','Ofiice');
+('Nathan','Office');
 
 INSERT INTO light(level, amount)
 VALUES
@@ -37,3 +37,4 @@ VALUES
 ('high', 87),
 ('medium', 62),
 ('low', 18);
+

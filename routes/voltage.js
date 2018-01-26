@@ -1,28 +1,35 @@
 const { Router } = require('express');
-const pool = require('../db');
+const pool = require('../db/index');
 
 const router = Router();
 
-router.get('/', (request, response, next) => {
-  pool.query('SELECT * FROM voltage ORDER BY id ASC', (err, res) => {
-    if (err) return next(err);
-
-    response.json(res.rows);
-  });
+router.get('/', async (request, response, next) => {
+  const sql = `
+		SELECT *
+		FROM voltage
+		ORDER BY id ASC`;
+  try {
+    const { rowCount, rows } = await pool.query(sql);
+    response.json(rowCount ? rows : []);
+  } catch (e) {
+    console.error(e);
+    next(e);
+  }
 });
 
-router.post('/', (request, response, next) => {
-  const { level, amount } = request.body;
-
-  pool.query(
-    'INSERT INTO voltage(level, amount) VALUES($1, $2)',
-    [level, amount],
-    (err, res) => {
-      if (err) return next(err);
-
-      response.redirect('/voltage');
-    },
-  );
+router.get('/:id', async (request, response, next) => {
+    const { id } = request.params;
+    const sql = `
+		SELECT *
+		FROM voltage
+		WHERE id = $1`;
+    try {
+        const {rowCount, rows} = await pool.query(sql, id);
+        response.json(rowCount ? rows :[]);
+    } catch (e) {
+        console.error(e);
+        next(e);
+    }
 });
 
 module.exports = router;

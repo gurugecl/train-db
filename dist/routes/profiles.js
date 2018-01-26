@@ -5,155 +5,237 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 var _require = require('express'),
     Router = _require.Router;
 
-var pool = require('../db');
+var pool = require('../db/index');
 
 var router = Router();
 
-router.get('/', function (request, response, next) {
-  pool.query('SELECT * FROM profiles ORDER BY id ASC', function (err, res) {
-    if (err) return next(err);
-
-    response.json(res.rows);
-  });
-});
-
 router.get('/', function () {
-  var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(request, response, next) {
-    var sql, _ref2, rowCount, rows;
+    var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(request, response, next) {
+        var sql, _ref2, rowCount, rows;
 
-    return regeneratorRuntime.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            sql = '\n\t\tSELECT *\n\t\tFROM profiles\n\t\tORDER BY id ASC';
-            _context.prev = 1;
-            _context.next = 4;
-            return pool.query(sql);
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+            while (1) {
+                switch (_context.prev = _context.next) {
+                    case 0:
+                        sql = '\n\t\tSELECT *\n\t\tFROM profiles\n\t\tORDER BY id ASC';
+                        _context.prev = 1;
+                        _context.next = 4;
+                        return pool.query(sql);
 
-          case 4:
-            _ref2 = _context.sent;
-            rowCount = _ref2.rowCount;
-            rows = _ref2.rows;
+                    case 4:
+                        _ref2 = _context.sent;
+                        rowCount = _ref2.rowCount;
+                        rows = _ref2.rows;
 
-            response.json(rowCount ? rows : []);
-            _context.next = 14;
-            break;
+                        response.json(rowCount ? rows : []);
+                        _context.next = 14;
+                        break;
 
-          case 10:
-            _context.prev = 10;
-            _context.t0 = _context['catch'](1);
+                    case 10:
+                        _context.prev = 10;
+                        _context.t0 = _context['catch'](1);
 
-            console.error(_context.t0);
-            next(_context.t0);
+                        console.error(_context.t0);
+                        next(_context.t0);
 
-          case 14:
-          case 'end':
-            return _context.stop();
-        }
-      }
-    }, _callee, undefined, [[1, 10]]);
-  }));
+                    case 14:
+                    case 'end':
+                        return _context.stop();
+                }
+            }
+        }, _callee, undefined, [[1, 10]]);
+    }));
 
-  return function (_x, _x2, _x3) {
-    return _ref.apply(this, arguments);
-  };
+    return function (_x, _x2, _x3) {
+        return _ref.apply(this, arguments);
+    };
 }());
 
-router.get('/:id', function (request, response, next) {
-  var id = request.params.id;
+router.get('/:id', function () {
+    var _ref3 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(request, response, next) {
+        var id, sql, _ref4, rowCount, rows;
 
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+            while (1) {
+                switch (_context2.prev = _context2.next) {
+                    case 0:
+                        id = request.params.id;
+                        sql = '\n\t\tSELECT *\n\t\tFROM profiles\n\t\tWHERE id = $1';
+                        _context2.prev = 2;
+                        _context2.next = 5;
+                        return pool.query(sql, id);
 
-  pool.query('SELECT * FROM profiles WHERE id = $1', [id], function (err, res) {
-    if (err) return next(err);
+                    case 5:
+                        _ref4 = _context2.sent;
+                        rowCount = _ref4.rowCount;
+                        rows = _ref4.rows;
 
-    response.json(res.rows);
-  });
-});
+                        response.json(rowCount ? rows : []);
+                        _context2.next = 15;
+                        break;
 
-router.get('/', function () {
-  var _ref3 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(request, response, next) {
-    var sql, _ref4, rowCount, rows;
+                    case 11:
+                        _context2.prev = 11;
+                        _context2.t0 = _context2['catch'](2);
 
-    return regeneratorRuntime.wrap(function _callee2$(_context2) {
-      while (1) {
-        switch (_context2.prev = _context2.next) {
-          case 0:
-            sql = '\n\t\tSELECT * \n\t\tFROM profiles \n\t\tWHERE id = $1, [id]';
-            _context2.prev = 1;
-            _context2.next = 4;
-            return pool.query(sql);
+                        console.error(_context2.t0);
+                        next(_context2.t0);
 
-          case 4:
-            _ref4 = _context2.sent;
-            rowCount = _ref4.rowCount;
-            rows = _ref4.rows;
+                    case 15:
+                    case 'end':
+                        return _context2.stop();
+                }
+            }
+        }, _callee2, undefined, [[2, 11]]);
+    }));
 
-            response.json(rowCount ? rows : []);
-            _context2.next = 14;
-            break;
-
-          case 10:
-            _context2.prev = 10;
-            _context2.t0 = _context2['catch'](1);
-
-            console.error(_context2.t0);
-            next(_context2.t0);
-
-          case 14:
-          case 'end':
-            return _context2.stop();
-        }
-      }
-    }, _callee2, undefined, [[1, 10]]);
-  }));
-
-  return function (_x4, _x5, _x6) {
-    return _ref3.apply(this, arguments);
-  };
+    return function (_x4, _x5, _x6) {
+        return _ref3.apply(this, arguments);
+    };
 }());
 
-router.post('/', function (request, response, next) {
-  var _request$body = request.body,
-      name = _request$body.name,
-      environment = _request$body.environment;
+router.post('/', function () {
+    var _ref5 = _asyncToGenerator(regeneratorRuntime.mark(function _callee3(request, response, next) {
+        var _request$body, name, environment, sql;
+
+        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+            while (1) {
+                switch (_context3.prev = _context3.next) {
+                    case 0:
+                        _request$body = request.body, name = _request$body.name, environment = _request$body.environment;
+                        sql = '\n\t\tINSERT INTO\n\t\tprofiles(name, environment)\n\t\tVALUES($1, $2)';
+                        _context3.prev = 2;
+                        _context3.next = 5;
+                        return pool.query(sql, name, environment);
+
+                    case 5:
+                        response.redirect('/profiles');
+                        _context3.next = 12;
+                        break;
+
+                    case 8:
+                        _context3.prev = 8;
+                        _context3.t0 = _context3['catch'](2);
+
+                        console.error(_context3.t0);
+                        next(_context3.t0);
+
+                    case 12:
+                    case 'end':
+                        return _context3.stop();
+                }
+            }
+        }, _callee3, undefined, [[2, 8]]);
+    }));
+
+    return function (_x7, _x8, _x9) {
+        return _ref5.apply(this, arguments);
+    };
+}());
+
+router.put('/:id', function () {
+    var _ref6 = _asyncToGenerator(regeneratorRuntime.mark(function _callee5(request, response, next) {
+        var id, keys, fields;
+        return regeneratorRuntime.wrap(function _callee5$(_context5) {
+            while (1) {
+                switch (_context5.prev = _context5.next) {
+                    case 0:
+                        id = request.params.id;
+                        keys = ['name', 'environment'];
+                        fields = [];
 
 
-  pool.query('INSERT INTO profiles(name, environment) VALUES($1, $2)', [name, environment], function (err, res) {
-    if (err) return next(err);
+                        keys.forEach(function (key) {
+                            if (request.body[key]) fields.push(key);
+                        });
 
-    response.redirect('/profiles');
-  });
-});
+                        fields.forEach(function () {
+                            var _ref7 = _asyncToGenerator(regeneratorRuntime.mark(function _callee4(field, index) {
+                                var sql;
+                                return regeneratorRuntime.wrap(function _callee4$(_context4) {
+                                    while (1) {
+                                        switch (_context4.prev = _context4.next) {
+                                            case 0:
+                                                sql = '\n\t\tUPDATE profiles\n\t\tSET ' + field + '=($1)\n\t\tWHERE id=($2)';
+                                                _context4.prev = 1;
+                                                _context4.next = 4;
+                                                return pool.query(sql, request.body[field], id);
 
-router.put('/:id', function (request, response, next) {
-  var id = request.params.id;
+                                            case 4:
+                                                if (index === fields.length - 1) response.redirect('/profiles');
+                                                _context4.next = 11;
+                                                break;
 
-  var keys = ['name', 'environment'];
-  var fields = [];
+                                            case 7:
+                                                _context4.prev = 7;
+                                                _context4.t0 = _context4['catch'](1);
 
-  keys.forEach(function (key) {
-    if (request.body[key]) fields.push(key);
-  });
+                                                console.error(_context4.t0);
+                                                next(_context4.t0);
 
-  fields.forEach(function (field, index) {
-    pool.query('UPDATE profiles SET ' + field + '=($1) WHERE id=($2)', [request.body[field], id], function (err, res) {
-      if (err) return next(err);
+                                            case 11:
+                                            case 'end':
+                                                return _context4.stop();
+                                        }
+                                    }
+                                }, _callee4, undefined, [[1, 7]]);
+                            }));
 
-      if (index === fields.length - 1) response.redirect('/profiles');
-    });
-  });
-});
+                            return function (_x13, _x14) {
+                                return _ref7.apply(this, arguments);
+                            };
+                        }());
 
-router.delete('/:id', function (request, response, next) {
-  var id = request.params.id;
+                    case 5:
+                    case 'end':
+                        return _context5.stop();
+                }
+            }
+        }, _callee5, undefined);
+    }));
 
+    return function (_x10, _x11, _x12) {
+        return _ref6.apply(this, arguments);
+    };
+}());
 
-  pool.query('DELETE FROM profiles WHERE id=($1)', [id], function (err, res) {
-    if (err) return next(err);
+router.delete('/:id', function () {
+    var _ref8 = _asyncToGenerator(regeneratorRuntime.mark(function _callee6(request, response, next) {
+        var id, sql;
+        return regeneratorRuntime.wrap(function _callee6$(_context6) {
+            while (1) {
+                switch (_context6.prev = _context6.next) {
+                    case 0:
+                        id = request.params.id;
+                        sql = '\n\t\tDELETE FROM\n\t\tprofiles\n\t\tWHERE id=($1)';
+                        _context6.prev = 2;
+                        _context6.next = 5;
+                        return pool.query(sql, id);
 
-    response.redirect('/profiles');
-  });
-});
+                    case 5:
+                        response.redirect('/profiles');
+                        _context6.next = 12;
+                        break;
+
+                    case 8:
+                        _context6.prev = 8;
+                        _context6.t0 = _context6['catch'](2);
+
+                        console.error(_context6.t0);
+                        next(_context6.t0);
+
+                    case 12:
+                    case 'end':
+                        return _context6.stop();
+                }
+            }
+        }, _callee6, undefined, [[2, 8]]);
+    }));
+
+    return function (_x15, _x16, _x17) {
+        return _ref8.apply(this, arguments);
+    };
+}());
 
 module.exports = router;
 //# sourceMappingURL=profiles.js.map

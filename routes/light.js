@@ -1,31 +1,35 @@
 const { Router } = require('express');
-const pool = require('../db');
+const pool = require('../db/index');
 
 const router = Router();
 
-router.get('/', (request, response, next) => {
-  console.log('inside get');
-  pool.query('SELECT * FROM light ORDER BY id ASC', (err, res) => {
-    console.log(err);
-    if (err) return next(err);
-
-    console.log(res.rows);
-    response.json(res.rows);
-  });
+router.get('/', async (request, response, next) => {
+    const sql = `
+		SELECT *
+		FROM light
+		ORDER BY id ASC`;
+    try {
+        const {rowCount, rows} = await pool.query(sql);
+        response.json(rowCount ? rows : []);
+    } catch (e) {
+        console.error(e);
+        next(e);
+    }
 });
 
-router.post('/', (request, response, next) => {
-  const { level, amount } = request.body;
-
-  pool.query(
-    'INSERT INTO light(level, amount) VALUES($1, $2)',
-    [level, amount],
-    (err, res) => {
-      if (err) return next(err);
-
-      response.redirect('/light');
-    },
-  );
+router.get('light/:id', async (request, response, next) => {
+    const { id } = request.params;
+    const sql = `
+		SELECT *
+		FROM light
+		WHERE id = $1`;
+    try {
+        const {rowCount, rows} = await pool.query(sql, id);
+        response.json(rowCount ? rows :[]);
+    } catch (e) {
+        console.error(e);
+        next(e);
+    }
 });
 
 module.exports = router;

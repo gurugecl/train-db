@@ -10,3 +10,4 @@ router.use('/light', light);
 router.use('/voltage', voltage);
 
 module.exports = router;
+
