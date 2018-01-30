@@ -1,8 +1,5 @@
 'use strict';
 
-// const PgConnection = require('postgresql-easy');
-// const Pool = new PgConnection(config);
-
 var _require = require('pg'),
     Pool = _require.Pool;
 
