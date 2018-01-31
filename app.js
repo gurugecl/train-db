@@ -9,8 +9,8 @@ app.use('/', routes);
 app.use(cors());
 // app.options('*', cors());
 
-// app.use((err, req, res, next) => {
-//     res.json(err);
-// });
+app.use((err, req, res, next) => {
+    res.json(err);
+});
 
 module.exports = app;

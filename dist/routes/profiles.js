@@ -90,7 +90,7 @@ router.get('/:id', function () {
 
 router.post('/', function () {
     var _ref3 = _asyncToGenerator(regeneratorRuntime.mark(function _callee3(request, response, next) {
-        var _request$body, name, environment, result;
+        var _request$body, name, environment;
 
         return regeneratorRuntime.wrap(function _callee3$(_context3) {
             while (1) {
@@ -98,22 +98,30 @@ router.post('/', function () {
                     case 0:
                         _request$body = request.body, name = _request$body.name, environment = _request$body.environment;
 
-                        try {
-                            result = pg.insert('profiles', { name: name, environment: environment });
+                        console.log("request.body", request.body);
+                        _context3.prev = 2;
+                        _context3.next = 5;
+                        return pg.insert('profiles', { name: name, environment: environment });
 
-                            response.redirect('/profiles');
-                            console.log(result.rows[0]);
-                        } catch (e) {
-                            console.error(e);
-                            next(e);
-                        }
+                    case 5:
+                        response.redirect('/profiles');
+                        // console.log(result.rows[0]);
+                        _context3.next = 12;
+                        break;
 
-                    case 2:
+                    case 8:
+                        _context3.prev = 8;
+                        _context3.t0 = _context3['catch'](2);
+
+                        console.error(_context3.t0);
+                        next(_context3.t0);
+
+                    case 12:
                     case 'end':
                         return _context3.stop();
                 }
             }
-        }, _callee3, undefined);
+        }, _callee3, undefined, [[2, 8]]);
     }));
 
     return function (_x7, _x8, _x9) {

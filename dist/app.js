@@ -11,9 +11,9 @@ app.use('/', routes);
 app.use(cors());
 // app.options('*', cors());
 
-// app.use((err, req, res, next) => {
-//     res.json(err);
-// });
+app.use(function (err, req, res, next) {
+    res.json(err);
+});
 
 module.exports = app;
 //# sourceMappingURL=app.js.map

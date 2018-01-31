@@ -28,13 +28,13 @@ VALUES
 
 INSERT INTO light(level, amount)
 VALUES
-('high', 98),
-('medium', 56),
-('low', 14);
+('High', 98),
+('Medium', 56),
+('Low', 14);
 
 INSERT INTO voltage(level, amount)
 VALUES
-('high', 87),
-('medium', 62),
-('low', 18);
+('High', 87),
+('Medium', 62),
+('Low', 18);
 

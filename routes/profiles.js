@@ -28,10 +28,11 @@ router.get('/:id', async (request, response, next) => {
 
 router.post('/', async (request, response, next) => {
     const { name, environment } = request.body;
+    console.log("request.body", request.body);
     try {
-        const result = pg.insert('profiles', {name , environment});
+        await pg.insert('profiles', {name , environment});
         response.redirect('/profiles');
-        console.log(result.rows[0]);
+        // console.log(result.rows[0]);
     } catch (e) {
         console.error(e);
         next(e);
