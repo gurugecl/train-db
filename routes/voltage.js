@@ -3,6 +3,10 @@ const PgConnection = require('postgresql-easy');
 const dbConnectionInfo = require('../secrets/db_configuration');
 const pg = new PgConnection(dbConnectionInfo);
 const router = Router();
+const cors = require('cors');
+
+router.use(cors());
+
 
 router.get('/', async (request, response, next) => {
     try {
@@ -14,11 +18,34 @@ router.get('/', async (request, response, next) => {
     }
 });
 
-router.get('/:id', async (request, response, next) => {
+//not added yet
+router.post('/', async (request, response, next) => {
+    const { level, amount } = request.body;
+    console.log("request.body", request.body);
+    try {
+        await pg.insert('voltage', { level, amount });
+        response.send();
+    } catch (e) {
+        console.error(e);
+        next(e);
+    }
+});
+
+router.delete('/:id', async (request, response, next) => {
     const { id } = request.params;
     try {
-        const result = await pg.getById('voltage', id);
-        response.json(result);
+        await pg.deleteById('voltage', id);
+        response.send();
+    } catch (e) {
+        console.error(e);
+        next(e);
+    }
+});
+
+router.delete('/', async (request, response, next) => {
+    try {
+        await pg.deleteAll('voltage');
+        response.send();
     } catch (e) {
         console.error(e);
         next(e);
