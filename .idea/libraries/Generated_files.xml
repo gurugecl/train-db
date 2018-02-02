@@ -5,6 +5,8 @@
         <item url="file://$PROJECT_DIR$/dist/app.js" />
         <item url="file://$PROJECT_DIR$/dist/bin/sql/sql-util.js" />
         <item url="file://$PROJECT_DIR$/dist/db/index.js" />
+        <item url="file://$PROJECT_DIR$/dist/mqtt/index.js" />
+        <item url="file://$PROJECT_DIR$/dist/mqtt/mqtt-service.js" />
         <item url="file://$PROJECT_DIR$/dist/routes/app.js" />
         <item url="file://$PROJECT_DIR$/dist/routes/index.js" />
         <item url="file://$PROJECT_DIR$/dist/routes/light.js" />
@@ -18,6 +20,8 @@
       <root url="file://$PROJECT_DIR$/dist/app.js" />
       <root url="file://$PROJECT_DIR$/dist/bin/sql/sql-util.js" />
       <root url="file://$PROJECT_DIR$/dist/db/index.js" />
+      <root url="file://$PROJECT_DIR$/dist/mqtt/index.js" />
+      <root url="file://$PROJECT_DIR$/dist/mqtt/mqtt-service.js" />
       <root url="file://$PROJECT_DIR$/dist/routes/app.js" />
       <root url="file://$PROJECT_DIR$/dist/routes/index.js" />
       <root url="file://$PROJECT_DIR$/dist/routes/light.js" />

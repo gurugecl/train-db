@@ -19,7 +19,9 @@
     "body-parser": "^1.18.2",
     "cors": "^2.8.4",
     "express": "^4.16.2",
+    "mqtt": "^2.15.1",
     "pg": "^7.4.1",
-    "postgresql-easy": "^1.2.3"
+    "postgresql-easy": "^1.2.3",
+    "ws": "^4.0.0"
   }
 }
